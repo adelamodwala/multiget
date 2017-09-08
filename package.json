@@ -1,0 +1,19 @@
+{
+  "name": "multiget",
+  "version": "0.1.0",
+  "description": "An application that downloads part of a file from a web server, in chunks.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adelamodwala/multiget.git"
+  },
+  "author": "Adel Amodwala",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/adelamodwala/multiget/issues"
+  },
+  "homepage": "https://github.com/adelamodwala/multiget#readme"
+}
