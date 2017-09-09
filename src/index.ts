@@ -1,8 +1,6 @@
-'use strict';
-
-var program = require('commander');
-var controller = require('./controller');
-var cmdUrl;
+const program = require('commander');
+const controller = require('./controller');
+let cmdUrl;
 
 program
     .version('0.1.0')
