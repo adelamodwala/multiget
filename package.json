@@ -5,7 +5,6 @@
   "main": "index.js",
   "scripts": {
     "test": "jest --verbose",
-    "start": "tsc && chmod +x ./build/index.js && ./build/index.js",
     "build": "webpack --config webpack.config.js && chmod +x ./dist/bundle.js"
   },
   "jest": {
