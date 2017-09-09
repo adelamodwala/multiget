@@ -9,6 +9,7 @@ export interface RequestConfig {
     baseURL?: string;
     headers?: any;
     data?: any;
+    responseType?: string;
 }
 
 /**
@@ -21,14 +22,14 @@ export interface INetworkUtils {
      * @param   {RequestConfig} requestConfig   HTTP request config
      * @returns {Promise<Object>}               Promise response
      */
-    http(requestConfig: RequestConfig): Promise<Object>;
+    http(requestConfig: RequestConfig): Promise<any>;
 
     /**
      * Resolve an array of http request promises in order
      * @param {Promise<Object>[]}   httpRequests An array of http request promises
      * @returns {Promise<Object[]>} A promise that resolves into the ordered response of each resolved http request
      */
-    httpResolveAllInOrder(httpRequests: Promise<Object>[]): Promise<Object[]>;
+    httpResolveAllInOrder(httpRequests: Promise<any>[]): Promise<any[]>;
 }
 
 export class NetworkUtils implements INetworkUtils {
@@ -44,7 +45,7 @@ export class NetworkUtils implements INetworkUtils {
      * @param {RequestConfig} requestConfig         HTTP request config
      * @returns {Promise<Object>}                   Promise response
      */
-    http(requestConfig: RequestConfig): Promise<Object> {
+    http(requestConfig: RequestConfig): Promise<any> {
         return this.httpApi(requestConfig);
     }
 
@@ -53,7 +54,7 @@ export class NetworkUtils implements INetworkUtils {
      * @param {Promise<Object>[]}   httpRequests An array of http request promises
      * @returns {Promise<Object[]>} A promise that resolves into the ordered response of each resolved http request
      */
-    httpResolveAllInOrder(httpRequests: Promise<Object>[]): Promise<Object[]> {
+    httpResolveAllInOrder(httpRequests: Promise<any>[]): Promise<any[]> {
         return this.httpApi.all(httpRequests);
     }
 
