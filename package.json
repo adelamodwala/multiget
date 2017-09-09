@@ -4,7 +4,8 @@
   "description": "An application that downloads part of a file from a web server, in chunks.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
@@ -15,5 +16,13 @@
   "bugs": {
     "url": "https://github.com/adelamodwala/multiget/issues"
   },
-  "homepage": "https://github.com/adelamodwala/multiget#readme"
+  "homepage": "https://github.com/adelamodwala/multiget#readme",
+  "dependencies": {
+    "axios": "^0.16.2",
+    "sync-request": "^4.1.0"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-preset-env": "^1.6.0"
+  }
 }
