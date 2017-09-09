@@ -1,4 +1,5 @@
-import networkUtils from './utils/networkUtils';
+import {initNetworkUtils} from './utils/networkUtils';
+const networkUtils = initNetworkUtils();
 
 let chunkSizeInBytes = 1024 * 1024; // 1 MiB = 1024 * 1024 bytes
 let url = 'http://8f60f463.bwtest-aws.pravala.com/384MB.jar';
@@ -38,7 +39,7 @@ function printChunkInfo(chunk) {
 }
 
 // Asynchronous
-networkUtils.httpAllInOrder([
+networkUtils.httpResolveAllInOrder([
     getChunk(url, 0, chunkSizeInBytes),
     getChunk(url, 1 * chunkSizeInBytes, chunkSizeInBytes),
     getChunk(url, 2 * chunkSizeInBytes, chunkSizeInBytes),

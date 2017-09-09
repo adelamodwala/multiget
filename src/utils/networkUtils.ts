@@ -3,7 +3,7 @@ import axios from 'axios';
 /**
  * A simple HTTP request configuration interface for making HTTP calls
  */
-interface RequestConfig {
+export interface RequestConfig {
     url?: string;
     method?: string;
     baseURL?: string;
@@ -14,19 +14,24 @@ interface RequestConfig {
 /**
  * A utility that provides network level functionality
  */
-interface INetworkUtils {
+export interface INetworkUtils {
 
     /**
      * Make an HTTP request
-     * @param {RequestConfig} requestConfig         HTTP request config
-     * @returns {Promise<Object>}                   Promise response
+     * @param   {RequestConfig} requestConfig   HTTP request config
+     * @returns {Promise<Object>}               Promise response
      */
     http(requestConfig: RequestConfig): Promise<Object>;
 
-    httpAllInOrder(httpRequests: Promise<Object>[]): Promise<Object[]>;
+    /**
+     * Resolve an array of http request promises in order
+     * @param {Promise<Object>[]}   httpRequests An array of http request promises
+     * @returns {Promise<Object[]>} A promise that resolves into the ordered response of each resolved http request
+     */
+    httpResolveAllInOrder(httpRequests: Promise<Object>[]): Promise<Object[]>;
 }
 
-class NetworkUtils implements INetworkUtils {
+export class NetworkUtils implements INetworkUtils {
 
     httpApi: any;
 
@@ -43,10 +48,21 @@ class NetworkUtils implements INetworkUtils {
         return this.httpApi(requestConfig);
     }
 
-    httpAllInOrder(httpRequests: Promise<Object>[]): Promise<Object[]> {
+    /**
+     * Resolve an array of http request promises in order
+     * @param {Promise<Object>[]}   httpRequests An array of http request promises
+     * @returns {Promise<Object[]>} A promise that resolves into the ordered response of each resolved http request
+     */
+    httpResolveAllInOrder(httpRequests: Promise<Object>[]): Promise<Object[]> {
         return this.httpApi.all(httpRequests);
     }
 
 }
 
-export default new NetworkUtils(axios);
+/**
+ * A factory method to instantiate an INetworkUtils object with an injected HttpApi dependency
+ * @returns {INetworkUtils}
+ */
+export function initNetworkUtils(): INetworkUtils {
+    return new NetworkUtils(axios);
+}
