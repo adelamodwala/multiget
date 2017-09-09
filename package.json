@@ -4,7 +4,21 @@
   "description": "An application that downloads part of a file from a web server, in chunks.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest --verbose",
+    "build": "webpack --config webpack.config.js && chmod +x ./dist/bundle.js"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.tsx?$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "testRegex": "(/tests/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json"
+    ]
   },
   "repository": {
     "type": "git",
@@ -15,5 +29,29 @@
   "bugs": {
     "url": "https://github.com/adelamodwala/multiget/issues"
   },
-  "homepage": "https://github.com/adelamodwala/multiget#readme"
+  "homepage": "https://github.com/adelamodwala/multiget#readme",
+  "dependencies": {
+    "@types/commander": "^2.9.2",
+    "axios": "^0.16.2",
+    "commander": "^2.11.0",
+    "fs": "0.0.1-security",
+    "request": "^2.81.0",
+    "request-promise": "^4.2.1",
+    "sync-request": "^4.1.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^20.0.8",
+    "@types/node": "^8.0.28",
+    "awesome-typescript-loader": "^3.2.3",
+    "babel-core": "^6.26.0",
+    "babel-preset-env": "^1.6.0",
+    "jest": "^21.0.2",
+    "shebang-loader": "0.0.1",
+    "source-map-loader": "^0.2.1",
+    "ts-jest": "^21.0.0",
+    "typescript": "^2.5.2",
+    "webpack": "^3.5.6",
+    "webpack-dev-server": "^2.7.1",
+    "webpack-merge": "^4.1.0"
+  }
 }
