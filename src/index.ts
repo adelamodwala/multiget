@@ -13,6 +13,8 @@ program
      */
     // Optional file name option
     .option('-o, --output [outfile]', 'Write output to [outfile] instead of default')
+    // Optional file size in MiB
+    .option('-s, --size [num]', 'Set how much of the file you want to download in MiB where [num] is an integer')
     /**
      * Define the arguments of the program and actions associated with receiving them
      */
@@ -31,10 +33,12 @@ if(typeof cmdUrl === 'undefined') {
     process.exit(1);
 }
 let fileName = program.output || "";
+let size = program.size || 0;
+size = size << 0; // Ensure that we only grab the integer part of the given number
 
 // Call the controllers multiGet method to perform the intended download
 try {
-    controller.multiGet(cmdUrl, fileName);
+    controller.multiGet(cmdUrl, fileName, size);
 }
 catch (err) {
     process.exit(1);

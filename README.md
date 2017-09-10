@@ -1,5 +1,5 @@
 # MultiGET
-This is a NodeJS application that attempts to boost downloads. It attempts to get multiple chunks of the requested file in parallel to speed up downloads.
+This is a NodeJS application that attempts to boost downloads. It retrieves multiple chunks of the requested file in parallel and saves the file in the working directory.
 
 Currently, it only supports downloading 4 chunks of 1MiB each for files that are at least 4MiB large.
 
@@ -10,7 +10,7 @@ $ npm run build
 ```
 This will create an executable node script under `dist/multiGet.js`.
 
-To run the executable `multiGet.js` simply call `$ ./multiGet.js`. 
+To run the executable simply call `$ ./multiGet.js`. This is a NodeJS script and hence you must have NodeJS installed.
 
 Usage is as follows:
 ```
