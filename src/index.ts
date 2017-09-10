@@ -33,4 +33,9 @@ if(typeof cmdUrl === 'undefined') {
 let fileName = program.output || "";
 
 // Call the controllers multiGet method to perform the intended download
-controller.multiGet(cmdUrl, fileName);
+try {
+    controller.multiGet(cmdUrl, fileName);
+}
+catch (err) {
+    process.exit(1);
+}

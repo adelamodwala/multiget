@@ -6,7 +6,7 @@ module.exports = {
     node: { process: false },
     entry: "./src/index.ts",
     output: {
-        filename: "./dist/bundle.js"
+        filename: "./dist/multiGet.js"
     },
 
     // Enable sourcemaps for debugging webpack's output.

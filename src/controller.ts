@@ -20,19 +20,33 @@ function getChunk(url: string, startBytes: number, chunkSizeInBytes: number) {
         },
         responseType: "arraybuffer"
     }).catch(err => {
-        console.error(err);
+        // Log an informative message and throw an exception
+        console.error(err.message);
         throw err;
     });
 }
 
 /**
  * Perform a multi get for the given url
- * @param {string} url                  The url of the file to be downloaded
- * @param {string?} fileName            The name of the file. If none is given a default value is used.
- * @param {number?} parts               The number of parts to download
- * @param {number?} chunkSizeInBytes    The size of the chunks to be downloaded in bytes
+ * @param   {string} url                  The url of the file to be downloaded
+ * @param   {string?} fileName            The name of the file. If none is given a default value is used.
+ * @param   {number?} parts               The number of parts to download
+ * @param   {number?} chunkSizeInBytes    The size of the chunks to be downloaded in bytes
+* @throws   {Error}                       Network and fs Errors
  */
 export function multiGet(url: string, fileName: string, parts: number = 4, chunkSizeInBytes: number = mebiByteInBytes) {
+
+    // Set the default file name to the name on the path
+    if (fileName === "") {
+        fileName = url.split('/').pop();
+    }
+
+    // Check if the file exists in the current directory
+    if(fs.existsSync(fileName)) {
+        // Show an informative message and throw an exception
+        console.error(fileName + " already exists");
+        throw new Error();
+    }
 
     // Open up our requests asynchronously and pool them in the requests array in order. This is effectively
     // parallelism in javascript networking.
@@ -53,13 +67,18 @@ export function multiGet(url: string, fileName: string, parts: number = 4, chunk
 
         // We get back the ordered chunks
 
-        // Set the default file name to the name on the path
-        if (fileName === "") {
-            fileName = chunks[0].request.path.replace('/', '');
-        }
+        // Open a write stream with the appropriate file name and error handling
+        let writeStream = fs.createWriteStream(fileName)
+            .on('error', err => {
+                // Let the user know that a file stream error occurred
+                console.error(err.message);
+            })
+            .on('finish', () => {
+                // Let the user know the program has completed
+                process.stdout.write('done\n');
+            });
 
-        // Open a write stream with the appropriate file name
-        let writeStream = fs.createWriteStream(fileName);
+
         chunks.map(chunk => {
             // Write each chunks data, which is an array buffer, into the write stream
             writeStream.write(chunk.data);
@@ -67,8 +86,5 @@ export function multiGet(url: string, fileName: string, parts: number = 4, chunk
 
         // Close the stream
         writeStream.end();
-
-        // Let the user know the program has completed
-        process.stdout.write('done');
     });
 }
