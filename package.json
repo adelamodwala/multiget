@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest --verbose",
-    "build": "webpack --config webpack.config.js && chmod +x ./dist/bundle.js"
+    "build": "webpack --config webpack.config.js && chmod +x ./dist/multiGet.js"
   },
   "jest": {
     "transform": {

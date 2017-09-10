@@ -4,9 +4,9 @@ const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 module.exports = {
     target: "node",
     node: { process: false },
-    entry: "./src/index.js",
+    entry: "./src/index.ts",
     output: {
-        filename: "./dist/bundle.js"
+        filename: "./dist/multiGet.js"
     },
 
     // Enable sourcemaps for debugging webpack's output.
@@ -30,7 +30,7 @@ module.exports = {
             'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
         }),
 
-        // Allow our index.js file to contain a shebang so that it may run as an executable
+        // Allow our index.ts file to contain a shebang so that it may run as an executable
         new webpack.BannerPlugin({
             raw: true,
             banner: '#!/usr/bin/env node'
