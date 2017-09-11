@@ -1,5 +1,6 @@
 import * as program from 'commander';
-import * as controller from './controller';
+import {initController} from "./controller";
+
 let cmdUrl;
 
 // Scaffold a CLI program
@@ -42,6 +43,7 @@ if(typeof size !== 'undefined') {
 
 // Call the controllers multiGet method to perform the intended download
 try {
+    let controller = initController();
     controller.multiGet(cmdUrl, fileName, size)
     // Handle Asynchronous errors
         .catch(handleAppError);
