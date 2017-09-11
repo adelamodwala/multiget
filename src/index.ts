@@ -33,8 +33,12 @@ if(typeof cmdUrl === 'undefined') {
     process.exit(1);
 }
 let fileName = program.output || "";
-let size = program.size || 0;
-size = size << 0; // Ensure that we only grab the integer part of the given number
+let size = program.size || undefined;
+if(typeof size !== 'undefined') {
+    // Ensure that we only grab the integer part of the given number
+    size = size << 0;
+}
+
 
 // Call the controllers multiGet method to perform the intended download
 controller.multiGet(cmdUrl, fileName, size)
