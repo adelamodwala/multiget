@@ -1,5 +1,5 @@
-const program = require('commander');
-const controller = require('./controller');
+import * as program from 'commander';
+import * as controller from './controller';
 let cmdUrl;
 
 // Scaffold a CLI program
