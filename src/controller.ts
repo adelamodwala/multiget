@@ -72,7 +72,7 @@ export function multiGet(url: string, fileName: string, parts: number = 4, chunk
         let writeStream = fs.createWriteStream(fileName)
             .on('error', err => {
                 // Let the user know that a file stream error occurred and allow fs to gracefully terminate process
-                console.error(err.message);
+                throw err;
             })
             .on('finish', () => {
                 // Let the user know the program has completed

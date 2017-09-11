@@ -41,10 +41,22 @@ if(typeof size !== 'undefined') {
 
 
 // Call the controllers multiGet method to perform the intended download
-controller.multiGet(cmdUrl, fileName, size)
-    .catch(err => {
+try {
+    controller.multiGet(cmdUrl, fileName, size)
+    // Handle Asynchronous errors
+        .catch(handleAppError);
+}
+catch (err) {
+    // Handle Synchronous errors
+    handleAppError(err);
+}
 
-        // Display an error message and shut down the process
-        console.error(err.name, err.message);
-        process.exit(1);
-    });
+/**
+ * Handle application wide errors
+ * @param err
+ */
+function handleAppError(err) {
+    // Display an error message and shut down the process
+    console.error(err.name, err.message);
+    process.exit(1);
+}
