@@ -1,5 +1,6 @@
-const program = require('commander');
-const controller = require('./controller');
+import * as program from 'commander';
+import {initController} from "./controller";
+
 let cmdUrl;
 
 // Scaffold a CLI program
@@ -33,13 +34,31 @@ if(typeof cmdUrl === 'undefined') {
     process.exit(1);
 }
 let fileName = program.output || "";
-let size = program.size || 0;
-size = size << 0; // Ensure that we only grab the integer part of the given number
+let size = program.size || undefined;
+if(typeof size !== 'undefined') {
+    // Ensure that we only grab the integer part of the given number
+    size = size << 0;
+}
+
 
 // Call the controllers multiGet method to perform the intended download
 try {
-    controller.multiGet(cmdUrl, fileName, size);
+    let controller = initController();
+    controller.multiGet(cmdUrl, fileName, size)
+    // Handle Asynchronous errors
+        .catch(handleAppError);
 }
 catch (err) {
+    // Handle Synchronous errors
+    handleAppError(err);
+}
+
+/**
+ * Handle application wide errors
+ * @param err
+ */
+function handleAppError(err) {
+    // Display an error message and shut down the process
+    console.error(err.name, err.message);
     process.exit(1);
 }
