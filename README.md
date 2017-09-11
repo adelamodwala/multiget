@@ -20,5 +20,6 @@ Usage is as follows:
   Options:
 
     -o, --output [outfile]  Write output to [outfile] instead of default
+    -s, --size [num]        Set how much of the file you want to download in MiB where [num] is an integer
     -h, --help              output usage information
 ```
