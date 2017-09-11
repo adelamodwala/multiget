@@ -44,8 +44,9 @@ export function multiGet(url: string, fileName: string, parts: number = 4, chunk
     // Check if the file exists in the current directory
     if(fs.existsSync(fileName)) {
         // Show an informative message and throw an exception
-        console.error(fileName + " already exists");
-        throw new Error();
+        let message = fileName + " already exists";
+        console.error(message);
+        throw new Error(message);
     }
 
     // Open up our requests asynchronously and pool them in the requests array in order. This is effectively
