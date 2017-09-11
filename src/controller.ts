@@ -20,8 +20,7 @@ function getChunk(url: string, startBytes: number, chunkSizeInBytes: number) {
         },
         responseType: "arraybuffer"
     }).catch(err => {
-        // Log an informative message and throw an exception
-        console.error(err.message);
+        // Throw an informative exception
         throw err;
     });
 }
@@ -34,7 +33,7 @@ function getChunk(url: string, startBytes: number, chunkSizeInBytes: number) {
  * @param   {number?} chunkSizeInBytes    The size of the chunks to be downloaded in bytes
 * @throws   {Error}                       Network and fs Errors
  */
-export function multiGet(url: string, fileName: string, parts: number = 4, chunkSizeInBytes: number = mebiByteInBytes) {
+export function multiGet(url: string, fileName: string, parts: number = 4, chunkSizeInBytes: number = mebiByteInBytes): Promise<any> {
 
     // Set the default file name to the name on the path
     if (fileName === "") {
@@ -43,10 +42,11 @@ export function multiGet(url: string, fileName: string, parts: number = 4, chunk
 
     // Check if the file exists in the current directory
     if(fs.existsSync(fileName)) {
-        // Show an informative message and throw an exception
-        let message = fileName + " already exists";
-        console.error(message);
-        throw new Error(message);
+        // Throw an informative exception
+        throw {
+            name: 'FileExists',
+            message: fileName + " already exists"
+        };
     }
 
     // Open up our requests asynchronously and pool them in the requests array in order. This is effectively
@@ -64,14 +64,14 @@ export function multiGet(url: string, fileName: string, parts: number = 4, chunk
     }
 
     // Call the ordered promise handler
-    networkUtils.httpResolveAllInOrder(requests).then(chunks => {
+    return networkUtils.httpResolveAllInOrder(requests).then(chunks => {
 
         // We get back the ordered chunks
 
         // Open a write stream with the appropriate file name and error handling
         let writeStream = fs.createWriteStream(fileName)
             .on('error', err => {
-                // Let the user know that a file stream error occurred
+                // Let the user know that a file stream error occurred and allow fs to gracefully terminate process
                 console.error(err.message);
             })
             .on('finish', () => {

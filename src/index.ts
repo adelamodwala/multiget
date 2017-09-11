@@ -37,9 +37,10 @@ let size = program.size || 0;
 size = size << 0; // Ensure that we only grab the integer part of the given number
 
 // Call the controllers multiGet method to perform the intended download
-try {
-    controller.multiGet(cmdUrl, fileName, size);
-}
-catch (err) {
-    process.exit(1);
-}
+controller.multiGet(cmdUrl, fileName, size)
+    .catch(err => {
+
+        // Display an error message and shut down the process
+        console.error(err.name, err.message);
+        process.exit(1);
+    });
